@@ -1,0 +1,14 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}New Centre{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+    <div class="container" style="max-width:50vw">
+        <h1 style="text-align:center" class="pt-4">Nouveau Centre de Formation</h1>
+        <a href="{{ path('app_admin_centre_index') }}" class="btn btn-primary mb-3">Retour a la liste</a>
+        {{ include('admin_centre/_form.html.twig') }}
+    </div>
+</div>
+    
+{% endblock %}

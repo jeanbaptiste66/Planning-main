@@ -1,0 +1,49 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Promo index{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+    <div class="container" style="max-width:80vw">
+        <h1 style="text-align:center" class="pt-4">Promos</h1>
+
+        <a href="{{ path('app_admin_promo_new') }}" class="btn btn-success mb-3">Nouvelle Promo</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Centre</th>
+                    <th>Cours</th>
+                    <th style="text-align:end" class="pe-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for promo in promos %}
+                <tr>
+                    <td>{{ promo.nom }}</td>
+                    <td>{{ promo.centre }}</td>
+                    <td>
+                        {% for cour in cours %}
+                        {{cour.module}}
+                        {# {% if promo.id == cour.promo_id %} {{cour.module}} {% endif %} #}
+                        {% endfor %}
+{#                     {% for key, cour in promo.cours %}
+                        {{cour}}{% if promo.cours | length - 1 != key %}, {% endif %}
+                    {% endfor %} #}
+                    </td>
+                    <td style="text-align:end">
+                        <a href="{{ path('app_admin_promo_edit', {'id': promo.id}) }}" class="btn btn-success">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">pas de données...</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+    
+{% endblock %}

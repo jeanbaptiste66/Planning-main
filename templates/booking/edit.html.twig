@@ -1,0 +1,93 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Edit Booking{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+    <div class="d-flex">
+        <div class="col-md-8 p-0" id="div1">
+            <div class="container me-0" style="max-width:30vw">
+                <h1 style="text-align:center" class="pt-4">Modifier Mission</h1>
+                <div class="d-flex justify-content-between py-2">
+                    <a href="{{ path('app_booking_calendar') }}" class="btn btn-primary mb-3">Retour au Planning</a>
+                    {{ include('booking/_delete_form.html.twig') }}
+                </div>
+                {{ include('booking/_form.html.twig', {'button_label': 'Modifier'}) }}
+            </div>
+        </div >
+        <div class="col-md-4 p-0" id="div2">
+            <div class="container bg-white text-center text-danger" style="max-width:10vw;border-radius:5px;margin-top:30%">
+            Mes astuces
+            </div>
+            <div class="container bg-white text-center mt-4" style="max-width:15vw;border-radius:5px;">
+            Je remplis du haut vers le bas pour éviter des erreurs
+            </div>
+            <div class="container bg-white text-center mt-3" style="max-width:15vw;border-radius:5px;">
+            Pour changer "Cours" ou "Promo" je change le "Centre" en premier pour que le filtre soit bien appliqué 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+        $(document).ready(function() {
+            $("#booking_centre").change(function(){
+                let id_centre = $(this).val();
+
+                $.ajax({
+                    url: "/admin/dashboard/" + id_centre,
+                    type: "GET",
+                    data: {id: id_centre},
+                    success: function(promos){
+                        console.log(promos);
+                        $("#booking_promo").html('');
+                        if(promos.length > 0){
+                            $("#booking_promo").
+                            append("<option value selected='selected'>Sélectionnez la promo...</option>");
+                            for(promo in promos){
+                                $("#booking_promo").
+                                append("<option value="+ promos[promo].id +">"+ promos[promo].nom +"</option>");
+                            }   
+                        } else {
+                            $("#booking_promo").
+                                append("<option>Pas de résultats trouvés</option>");
+                        }
+                    }
+                });
+            })
+        }) 
+</script>
+<script>
+        $(document).ready(function() {
+            $("#booking_promo").change(function(){
+                let id_promo = $(this).val();
+
+                $.ajax({
+                    url: "/admin/promo/" + id_promo,
+                    type: "GET",
+                    data: {id: id_promo},
+                    success: function(cours){
+                        console.log(cours);
+                        $("#booking_cours").html('');
+
+                        if(cours.length > 0){
+                            $("#booking_cours").
+                            append("<option value selected='selected'>Sélectionnez le cours...</option>");
+                            for(cour in cours){
+                                $("#booking_cours").
+                                append("<option value="+ cours[cour].id +">"+ cours[cour].module +"</option>");
+                            }
+                        } else {
+                            $("#booking_cours").
+                            append("<option>Pas de résultats trouvés</option>");
+                        }
+                    }
+                });
+            })
+        }) 
+</script>
+{% endblock %}
+
+    

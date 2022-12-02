@@ -1,0 +1,13 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Nouveau Utilisateur{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+    <div class="container" style="max-width:50vw">
+        <h1 style="text-align:center" class="pt-4">Nouveau Utilisateur</h1>
+        <a href="{{ path('app_admin_user_index') }}" class="btn btn-primary mb-3">Retour à la liste</a>
+        {{ include('admin_user/_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Centre index{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+    <div class="container">
+        <h1 style="text-align:center" class="pt-4">Centres de Formation</h1>
+        <a href="{{ path('app_admin_centre_new') }}" class="btn btn-success mb-3">Nouveau Centre</a>
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Code-Postal</th>
+                    <th>Mail</th>
+                    <th>Telephone</th>
+                    <th>Responsable</th>
+                    <th>Horaires (Matin)</th>
+                    <th>Horaires (Apres-Midi)</th>
+                    <th>Couleur</th>
+                    <th style="text-align:center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for centre in centres %}
+                <tr>
+                    <td>{{ centre.nom }}</td>
+                    <td>{{ centre.adresse }}</td>
+                    <td>{{ centre.codePostal }}</td>
+                    <td>{{ centre.mail }}</td>
+                    <td>{{ centre.telephone }}</td>
+                    <td>{{ centre.responsable }}</td>
+                    <td>{{ centre.horaire }}</td>
+                    <td>{{ centre.horaireApresMidi }}</td>
+                    <td><div style="background-color:{{ centre.couleur }}; border-radius:5px;padding:3px;height:38px"></div></td>
+                    <td>
+                        <a href="{{ path('app_admin_centre_edit', {'id': centre.id}) }}" class="btn btn-success">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">pas de données...</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    
+    
+{% endblock %}

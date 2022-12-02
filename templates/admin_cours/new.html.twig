@@ -1,0 +1,18 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}New Cours{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+    <div class="container" style="max-width:50vw">
+        <div class="d-flex justify-content-center pt-4">
+        <h1>Nouveau Cours</h1>
+        </div>
+        <div class="d-flex justify-content-start pb-3">
+            <a href="{{ path('app_admin_cours_index') }}" class="btn btn-primary">Retour à la liste</a>
+        </div>
+        {{ include('admin_cours/_form.html.twig') }}
+    </div>
+</div>
+    
+{% endblock %}
