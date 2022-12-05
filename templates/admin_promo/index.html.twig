@@ -23,13 +23,9 @@
                     <td>{{ promo.nom }}</td>
                     <td>{{ promo.centre }}</td>
                     <td>
-                        {% for cour in cours %}
-                        {{cour.module}}
-                        {# {% if promo.id == cour.promo_id %} {{cour.module}} {% endif %} #}
+                        {% for key, cour in promo.cours %}
+                            {{cour}}{% if promo.cours | length - 1 != key %}, {% endif %}
                         {% endfor %}
-{#                     {% for key, cour in promo.cours %}
-                        {{cour}}{% if promo.cours | length - 1 != key %}, {% endif %}
-                    {% endfor %} #}
                     </td>
                     <td style="text-align:end">
                         <a href="{{ path('app_admin_promo_edit', {'id': promo.id}) }}" class="btn btn-success">Modifier</a>

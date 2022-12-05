@@ -18,12 +18,9 @@ class AdminPromoController extends AbstractController
     #[Route('/', name: 'app_admin_promo_index', methods: ['GET'])]
     public function index(PromoRepository $promoRepository, CoursRepository $coursRepository): Response
     {
-        $promo = $promoRepository -> findAll();
-        //dump($promo);
-        //dd($coursRepository -> findAll());
+   
         return $this->render('admin_promo/index.html.twig', [
-            'promos' => $promo,
-            'cours' => $coursRepository -> findAll()
+            'promos' => $promoRepository -> findAll()
         ]);
     }
 

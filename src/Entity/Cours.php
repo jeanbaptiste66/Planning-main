@@ -18,16 +18,16 @@ class Cours
     #[ORM\Column(length: 255)]
     private ?string $module = null;
 
-    #[ORM\ManyToMany(targetEntity: Promo::class, inversedBy: 'cours')]
-    private Collection $promo;
-
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Booking::class)]
     private Collection $bookings;
 
+    #[ORM\ManyToMany(targetEntity: Promo::class, mappedBy: 'cours')]
+    private Collection $promos;
+
     public function __construct()
     {
-        $this->promo = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->promos = new ArrayCollection();
     }
 
     public function __toString()
@@ -48,30 +48,6 @@ class Cours
     public function setModule(string $module): self
     {
         $this->module = $module;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Promo>
-     */
-    public function getPromo(): Collection
-    {
-        return $this->promo;
-    }
-
-    public function addPromo(Promo $promo): self
-    {
-        if (!$this->promo->contains($promo)) {
-            $this->promo->add($promo);
-        }
-
-        return $this;
-    }
-
-    public function removePromo(Promo $promo): self
-    {
-        $this->promo->removeElement($promo);
 
         return $this;
     }
@@ -101,6 +77,33 @@ class Cours
             if ($booking->getCours() === $this) {
                 $booking->setCours(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promo>
+     */
+    public function getPromos(): Collection
+    {
+        return $this->promos;
+    }
+
+    public function addPromo(Promo $promo): self
+    {
+        if (!$this->promos->contains($promo)) {
+            $this->promos->add($promo);
+            $promo->addCour($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromo(Promo $promo): self
+    {
+        if ($this->promos->removeElement($promo)) {
+            $promo->removeCour($this);
         }
 
         return $this;

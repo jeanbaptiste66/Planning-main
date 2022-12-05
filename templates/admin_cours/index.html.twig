@@ -22,8 +22,8 @@
                 <tr>
                     <td>{{ cour.module }}</td>
                     <td>
-                    {% for key,promo in cour.promo %}
-                        {{promo}}{% if cour.promo | length - 1 != key %}, {% endif %}
+                    {% for key,promo in cour.promos %}
+                        {{promo}}{% if cour.promos | length - 1 != key %}, {% endif %}
                     {% endfor %}
                     </td>
                     <td style="text-align:end">
