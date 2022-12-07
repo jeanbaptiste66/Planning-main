@@ -48,10 +48,14 @@ class Centre
     #[ORM\OneToMany(mappedBy: 'centre', targetEntity: Promo::class)]
     private Collection $promos;
 
+    #[ORM\OneToMany(mappedBy: 'centre', targetEntity: Documents::class)]
+    private Collection $documents;
+
     public function __construct()
     {
         $this->promos = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     public function __toString()
@@ -226,6 +230,36 @@ class Centre
             // set the owning side to null (unless already changed)
             if ($promo->getCentre() === $this) {
                 $promo->setCentre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Documents>
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Documents $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+            $document->setCentre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Documents $document): self
+    {
+        if ($this->documents->removeElement($document)) {
+            // set the owning side to null (unless already changed)
+            if ($document->getCentre() === $this) {
+                $document->setCentre(null);
             }
         }
 
