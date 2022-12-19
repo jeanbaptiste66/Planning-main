@@ -21,17 +21,17 @@ class CoursType extends AbstractType
                     'placeholder' => 'ex: Javascript'
                 ]
             ])
-            ->add('promo', EntityType::class, [
-                'class' => Promo::class,
-                'required' => false,
-                'label' =>  'Promo(s) :',
-                'multiple' => true,
-                'by_reference' => true,
-                'attr' => [
-                    'class' => 'select2',
-                    'data-placeholder' => 'selectionez une ou plusieurs promo(s) :',
-                ],
-            ])
+            // ->add('promos', EntityType::class, [
+            //     'class' => Promo::class,
+            //     'required' => false,
+            //     'label' =>  'Promo(s) :',
+            //     'multiple' => true,
+            //     'by_reference' => true,
+            //     'attr' => [
+            //         'class' => 'select2',
+            //         'data-placeholder' => 'selectionez une ou plusieurs promo(s) :',
+            //     ],
+            // ])
         ;
     }
 

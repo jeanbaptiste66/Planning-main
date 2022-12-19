@@ -6,9 +6,11 @@ use App\Entity\Documents;
 use App\Form\DocumentsType;
 use App\Repository\DocumentsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/documents')]
 class DocumentsController extends AbstractController
@@ -22,13 +24,34 @@ class DocumentsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_documents_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DocumentsRepository $documentsRepository): Response
+    public function new(Request $request, DocumentsRepository $documentsRepository, SluggerInterface $slugger): Response
     {
         $document = new Documents();
         $form = $this->createForm(DocumentsType::class, $document);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //upload du fichier
+            $pdf = $form->get("fichier")->getData();
+        
+            if( $pdf ){
+                $originalFilename = pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($document->getCentre());
+                $newFilename = $safeFilename.'-'.$originalFilename.uniqid().'.'.$pdf->guessExtension();
+
+                try {
+                    $pdf->move(
+                        $this->getParameter('documents_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $document->setNom($newFilename);
+                $document->setCreatedAt(new \DateTimeImmutable());
+                $document->setUser($this->getUser());
+            }
+         
             $documentsRepository->save($document, true);
 
             return $this->redirectToRoute('app_documents_index', [], Response::HTTP_SEE_OTHER);

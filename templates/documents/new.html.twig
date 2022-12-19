@@ -1,11 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_back.html.twig' %}
 
-{% block title %}New Documents{% endblock %}
+{% block title %}Nouveau Document{% endblock %}
 
 {% block body %}
-    <h1>Create new Documents</h1>
+<div style="background-color: #D1D1D1; min-height:100vh">
+<div class="container" style="max-width:80vw">
+    <h1 style="text-align:center" class="pt-4">Créer un nouveau document</h1>
+
+    <a href="{{ path('app_documents_index') }}"  class="btn btn-primary mb-3">Retour à la liste</a>
 
     {{ include('documents/_form.html.twig') }}
 
-    <a href="{{ path('app_documents_index') }}">back to list</a>
+    
+
+</div>
+</div>
 {% endblock %}

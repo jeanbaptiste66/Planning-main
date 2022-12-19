@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\DocumentsRepository;
+use Vich\UploadableField;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DocumentsRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\Uploadable;
 
 #[ORM\Entity(repositoryClass: DocumentsRepository::class)]
+#[Vich\Uploadable]
 class Documents
 {
     #[ORM\Id]
@@ -15,6 +20,12 @@ class Documents
 
     #[ORM\Column(length: 40)]
     private ?string $nom = null;
+
+    #[Vich\UploadableField(mapping: 'docs_images', fileNameProperty: 'nom')]
+    private ?File $imageFile = null;
+
+    ###[ORM\Column(type: 'string')]
+    ##private ?File $imageName = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -41,6 +52,21 @@ class Documents
         $this->nom = $nom;
 
         return $this;
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
