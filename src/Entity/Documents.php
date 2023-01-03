@@ -18,7 +18,7 @@ class Documents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40)]
+    #[ORM\Column(length: 150)]
     private ?string $nom = null;
 
     #[Vich\UploadableField(mapping: 'docs_images', fileNameProperty: 'nom')]

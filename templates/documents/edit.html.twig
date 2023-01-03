@@ -7,11 +7,13 @@
     <div class="container" style="max-width:50vw">
         <h1>Edit Documents</h1>
 
-        {{ include('documents/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
-
         <a href="{{ path('app_documents_index') }}" class="btn btn-primary mb-3">Retour à la liste</a>
 
-        {{ include('documents/_delete_form.html.twig') }}
+        {{ include('documents/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+
+        
+
+        
 
     </div>
 </div>
