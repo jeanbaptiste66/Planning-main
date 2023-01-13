@@ -51,7 +51,12 @@ class BookingType extends AbstractType
                 'required' => false,
                 'data' => true,
                 ])
-
+            
+            ->add('touteLaJournee', CheckboxType::class, [
+                'label' => 'Toute la journée',
+                'required' => false,
+                'data' => true,
+                ])
             ->add('formateur', EntityType::class, [
                 'class' => User::class,
                 'constraints' => [
@@ -96,9 +101,7 @@ class BookingType extends AbstractType
                     'placeholder' => 'specification de la promo...',
                     'class' => 'text-black'
                 ],
-                'constraints' => [
-                    new NotBlank(['message' => 'Ce champs ne peut pas être vide'])
-                ],
+                'required' => false,
             ])
             
             ->add('cours', EntityType::class, [

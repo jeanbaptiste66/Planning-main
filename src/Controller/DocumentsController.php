@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/admin/documents')]
+#[Route('/documents')]
 class DocumentsController extends AbstractController
 {
     #[Route('/', name: 'app_documents_index', methods: ['GET'])]
@@ -92,7 +92,12 @@ class DocumentsController extends AbstractController
     #[Route('/{id}', name: 'app_documents_delete', methods: ['POST'])]
     public function delete(Request $request, Documents $document, DocumentsRepository $documentsRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {  
+            
+          //  if ( file_exists($this -> getParameter ('documents_directory') .  "/" . $document -> getNom ()){
+                unlink($this->getParameter('documents_directory') ."/". $document -> getNom() );
+          //  }
+
             $documentsRepository->remove($document, true);
         }
 

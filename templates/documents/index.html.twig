@@ -28,7 +28,6 @@
                 <td>{{ document.createdAt ? document.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_documents_show', {'id': document.id}) }}"class="btn btn-primary mb-3">show</a>
-                    <a href="{{ path('app_documents_edit', {'id': document.id}) }}"class="btn btn-success mb-3">edit</a>
                 </td>
             </tr>
         {% else %}

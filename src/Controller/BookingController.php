@@ -39,11 +39,15 @@ class BookingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($booking -> getTitle()==''){
+                $booking -> setTitle($booking -> getFormateur() -> getNom());
+            }
             $nouvelledate = $request->request->get('booking')['endAt'].' 01:00:00';
             $booking->setEndAt(date_create_immutable_from_format('Y-m-d H:i:s',$nouvelledate));
             $bookingRepository->save($booking, true);
             return $this->redirectToRoute('app_booking_calendar', [], Response::HTTP_SEE_OTHER);
         }
+    
 
         return $this->renderForm('booking/new.html.twig', [
             'booking' => $booking,

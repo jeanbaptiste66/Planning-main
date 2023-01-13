@@ -20,7 +20,7 @@ class Booking
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $endAt = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $title = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
@@ -42,6 +42,10 @@ class Booking
 
     #[ORM\Column]
     private ?bool $aprem = null;
+
+    #[ORM\Column]
+    private ?bool $touteLaJournee = null;
+
 
     public function getId(): ?int
     {
@@ -152,6 +156,18 @@ class Booking
     public function setAprem(bool $aprem): self
     {
         $this->aprem = $aprem;
+
+        return $this;
+    }
+
+    public function isTouteLaJournee(): ?bool
+    {
+        return $this->touteLaJournee;
+    }
+
+    public function setTouteLaJournee(bool $touteLaJournee): self
+    {
+        $this->touteLaJournee = $touteLaJournee;
 
         return $this;
     }
