@@ -38,6 +38,21 @@ class DocumentsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function documentFormateur ($user){
+        $entityManager = $this -> getEntityManager();
+        $query = $entityManager -> createQuery(
+            "SELECT d 
+            FROM App\Entity\Documents d, 
+            App\Entity\Centre c, 
+            App\Entity\User u, 
+            App\Entity\Booking b
+            WHERE c.id = b.centre 
+            AND b.formateur = u.id 
+            AND c.id = d.centre 
+            AND u.id = :user"
+        ) -> setParameter("user", $user -> getId());
+            return $query->getResult();
+    }
 
 //    /**
 //     * @return Documents[] Returns an array of Documents objects

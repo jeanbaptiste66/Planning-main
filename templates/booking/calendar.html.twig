@@ -76,7 +76,17 @@
                 eventDidMount: function (info) {
                     var matin = info.event.extendedProps.matin;
                     var aprem = info.event.extendedProps.aprem;
-                    var day = ((matin && aprem) ? true : false);
+                    var jour = info.event.extendedProps.journee;
+                    var day = "";
+                    if(jour)
+                        day = "Toute la journée";
+                    else if(matin && aprem)
+                        day = "Matin + Après";
+                    else if(matin)
+                        day = "Matin";
+                    else   
+                        day = "Après-midi";
+                        console.log(info);
                     var tooltip = new bootstrap.Tooltip(info.el, {
                         title:  "<div>" + info.event.extendedProps.formateur + 
                                 "</div><div> " + info.event.start.toLocaleString('fr-FR', {
@@ -87,7 +97,7 @@
                                                             day: '2-digit',
                                                             month: 'long',
                                                             year: 'numeric'}) + 
-                                "</div><div> " + (day ? "Matin + Après-midi" : (matin ? "Matin" : "Après-midi")) + 
+                                "</div><div> " + (day) + 
                                 "</div>",
                         placement: 'top',
                         trigger: 'hover',

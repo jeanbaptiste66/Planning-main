@@ -34,6 +34,7 @@ class CalendarSubscriber implements EventSubscriberInterface
         $start = $calendar->getStart();
         $end = $calendar->getEnd();
         $userid=null;
+        $journee = "";
         $filters = $calendar->getFilters();
         if ($filters != null){
           $userid = $filters['user'];
@@ -78,7 +79,14 @@ class CalendarSubscriber implements EventSubscriberInterface
              */
             
             if ($userid == -1) {
-                $journee = ($booking->isMatin()?($booking->isAprem()? 'Matin + Après-Midi': 'Matin') : 'Après-Midi');
+                if($booking->isJournee())
+                    $journee = "Toute la journée";
+                else if($booking->isMatin() && $booking->isAprem())
+                    $journee = "Matin + Après-Midi";
+                else if($booking->isMatin())
+                    $journee = "Matin";
+                else
+                    $journee = "Après-Midi";
 
                 $bookingEvent->setOptions([
                 'backgroundColor' => $booking->getFormateur()->getCouleur(),
@@ -87,6 +95,7 @@ class CalendarSubscriber implements EventSubscriberInterface
                 'formateur' => $booking->getFormateur()->getPrenom() . ' ' . $booking->getFormateur()->getNom(),
                 'matin' => $booking->isMatin(),
                 'aprem' => $booking->isAprem(),
+                'journee' => $booking -> isJournee(),
                 'textColor' => '#000000'
                 ]);
                 
@@ -97,7 +106,14 @@ class CalendarSubscriber implements EventSubscriberInterface
                     ])
                 );
             } else{
-                $journee = ($booking->isMatin()?($booking->isAprem()? 'Matin + Après-Midi': 'Matin') : 'Après-Midi');
+                if($booking->isJournee())
+                    $journee = "Journée";
+                else if($booking->isMatin() && $booking->isAprem())
+                    $journee = "Matin + Après-Midi";
+                else if($booking->isMatin())
+                    $journee = "Matin";
+                else
+                    $journee = "Après-Midi";
 
                 $bookingEvent->setOptions([
                     'backgroundColor' => $booking->getCentre()->getCouleur(),
@@ -106,6 +122,7 @@ class CalendarSubscriber implements EventSubscriberInterface
                     'formateur' => $booking->getFormateur()->getPrenom() . ' ' . $booking->getFormateur()->getNom(),
                     'matin' => $booking->isMatin(),
                     'aprem' => $booking->isAprem(),
+                    'journee'=> $booking->isJournee(),
                     ]);
                     
                     $bookingEvent->addOption(

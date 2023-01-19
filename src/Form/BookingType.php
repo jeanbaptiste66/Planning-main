@@ -52,7 +52,7 @@ class BookingType extends AbstractType
                 'data' => true,
                 ])
             
-            ->add('touteLaJournee', CheckboxType::class, [
+            ->add('journee', CheckboxType::class, [
                 'label' => 'Toute la journée',
                 'required' => false,
                 'data' => true,

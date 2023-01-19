@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Documents;
 use App\Form\DocumentsType;
+use App\Repository\CentreRepository;
 use App\Repository\DocumentsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/documents')]
 class DocumentsController extends AbstractController
@@ -20,6 +21,17 @@ class DocumentsController extends AbstractController
     {
         return $this->render('documents/index.html.twig', [
             'documents' => $documentsRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/formateur', name: 'app_documentFormateur', methods: ['GET'])]
+    public function formateur(DocumentsRepository $documentsRepository, CentreRepository $centre): Response
+    {
+        $user = $this -> getUser();
+
+        $documents = $documentsRepository-> documentFormateur ($user);
+        return $this->render('documents/index.html.twig', [
+            'documents' => $documents,
         ]);
     }
 

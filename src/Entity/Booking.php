@@ -44,7 +44,7 @@ class Booking
     private ?bool $aprem = null;
 
     #[ORM\Column]
-    private ?bool $touteLaJournee = null;
+    private ?bool $journee = null;
 
 
     public function getId(): ?int
@@ -160,14 +160,14 @@ class Booking
         return $this;
     }
 
-    public function isTouteLaJournee(): ?bool
+    public function isJournee(): ?bool
     {
-        return $this->touteLaJournee;
+        return $this->journee;
     }
 
-    public function setTouteLaJournee(bool $touteLaJournee): self
+    public function setJournee(bool $journee): self
     {
-        $this->touteLaJournee = $touteLaJournee;
+        $this->journee = $journee;
 
         return $this;
     }

@@ -1,0 +1,44 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Documents index{% endblock %}
+
+{% block body %}
+<div style="background-color: #D1D1D1; min-height:100vh">
+<div class="container" style="max-width:80vw">
+    <h1 style="text-align:center" class="pt-4">Documents</h1>
+
+    <a href="{{ path('app_documents_new') }}" class="btn btn-primary mb-3">Nouveau document</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for document in documents %}
+            <tr>
+                <td>{{ document.id }}</td>
+                <td> 
+                    <a href="{{ asset('documents/'~ document.nom ) }}">{{ document.nom }}</a>
+                </td>
+                <td>{{ document.createdAt ? document.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_documents_show', {'id': document.id}) }}"class="btn btn-primary mb-3">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    </div>
+</div>
+{% endblock %}
